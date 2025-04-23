@@ -31,6 +31,14 @@ app.use((0, cors_1.default)({
     credentials: true // allow cookies
 }));
 app.use(express_1.default.json());
+app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        res.json({ message: "response working" });
+    }
+    catch (error) {
+        res.status(500).json({ error: "Something went wrong" });
+    }
+}));
 app.post("/template", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f;
     const prompt = req.body.prompt;
