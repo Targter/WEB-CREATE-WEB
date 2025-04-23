@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc -b && node dist/index.js",
-    "start": "tsc -b && nodemon dist/index.js",
+     "clean": "rm -rf dist",
     "build": "tsc -b",
-    "prepare": "npm run build",
+    "dev": "npm run build && node dist/index.js",
+    "start": "npm run build && nodemon dist/index.js",
+    "prepare": "npm run build"
   },
   "keywords": [],
   "author": "",
