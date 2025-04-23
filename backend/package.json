@@ -2,12 +2,17 @@
   "name": "be",
   "version": "1.0.0",
   "main": "index.js",
+  "pre-commit": [
+    "ts.check",
+    "build",
+    "add-build"
+],
   "scripts": {
-     "clean": "rm -rf dist",
-    "build": "tsc -b",
-    "dev": "npm run build && node dist/index.js",
-    "start": "npm run build && nodemon dist/index.js",
-    "prepare": "npm run build"
+    "dev": "tsc -b && node dist/index.js",
+    "start": "tsc -b && nodemon dist/index.js",
+    "build": "rimraf dist && tsc",
+    "ts.check": "tsc --project tsconfig.json",
+    "add-build": "git add dist"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +27,8 @@
     "dotenv": "^16.5.0",
     "express": "^4.21.1",
     "nodemon": "^3.1.9",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^5.0.10",
     "typescript": "^5.7.2"
   }
 }
