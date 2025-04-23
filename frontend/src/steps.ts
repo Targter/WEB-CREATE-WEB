@@ -29,13 +29,15 @@ import { Step, StepType } from './types';
  * The input can have strings in the middle they need to be ignored
  */
 export function parseXml(response: string): Step[] {
+
+  console.log("this response parseXML:::::::::::",response)
     // Extract the XML content between <boltArtifact> tags
     const xmlMatch = response.match(/<boltArtifact[^>]*>([\s\S]*?)<\/boltArtifact>/);
     
     if (!xmlMatch) {
+      console.log("this will failed")
       return [];
     }
-  
     const xmlContent = xmlMatch[1];
     const steps: Step[] = [];
     let stepId = 1;
@@ -83,6 +85,8 @@ export function parseXml(response: string): Step[] {
         });
       }
     }
+
+    console.log("this si the output of htis :_________________________",steps)
   
     return steps;
   }

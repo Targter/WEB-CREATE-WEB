@@ -13,16 +13,10 @@ import { useWebContainer } from '../hooks/useWebContainer';
 import { FileNode, WebContainer } from '@webcontainer/api';
 import { Loader } from '../components/Loader';
 
-// const MOCK_FILE_CONTENT = `// This is a sample file content
-// import React from 'react';
-
-// function Component() {
-//   return <div>Hello World</div>;
-// }
-
-// export default Component;`;
+// const MOCK_
 
 export function Builder() {
+  console.log("PAGE CALLED..........")
   const location = useLocation();
   const { prompt } = location.state as { prompt: string };
   const [userPrompt, setPrompt] = useState("");
@@ -40,6 +34,7 @@ export function Builder() {
   const [files, setFiles] = useState<FileItem[]>([]);
 
   useEffect(() => {
+    console.log("responseAfterChange:",steps)
     let originalFiles = [...files];
     let updateHappened = false;
     steps.filter(({status}) => status === "pending").map(step => {
@@ -146,11 +141,12 @@ export function Builder() {
     const mountStructure = createMountStructure(files);
   
     // Mount the structure if WebContainer is available
-    console.log(mountStructure);
+    console.log("MOUNTsTRCUTURE:",mountStructure);
     webcontainer?.mount(mountStructure);
   }, [files, webcontainer]);
 
   async function init() {
+    if(!prompt) return; 
     const response = await axios.post(`${BACKEND_URL}/template`, {
       prompt: prompt.trim()
     });
@@ -159,21 +155,14 @@ export function Builder() {
     setTemplateSet(true);
     
     const {prompts, uiPrompts} = response.data;
-    console.log("/template:prompts",prompts)
 
     setSteps(parseXml(uiPrompts[0]).map((x: Step) => ({
       ...x,
       status: "pending"
     })));
-    console.log('setSteps:',steps)
 
     setLoading(true);
-    console.log("checkPromptsOnly:",prompts)
-    console.log(prompt)
-    console.log("sendData by chats:",[...prompts, prompt].map(content => ({
-      role: "user",
-      content
-    })))
+  
     const stepsResponse = await axios.post(`${BACKEND_URL}/chat`, {
       messages: [...prompts, prompt].map(content => ({
         role: "user",
@@ -182,7 +171,7 @@ export function Builder() {
     })
     console.log("responseChat:",stepsResponse)
     setLoading(false);
-
+    
     setSteps(s => [...s, ...parseXml(stepsResponse.data.response).map(x => ({
       ...x,
       status: "pending" as "pending"
@@ -197,6 +186,7 @@ export function Builder() {
   }
 
   useEffect(() => {
+    console.log("called")
     init();
   }, [])
 
@@ -209,10 +199,10 @@ export function Builder() {
       backgroundImage: "linear-gradient(315deg, #003366 0%, #242124 74%)"
     }}
 >    
-      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4" style={{     backgroundColor: "#003153",
+      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4 flex" style={{     backgroundColor: "#003153",
       backgroundImage: "linear-gradient(315deg, #003153 0%, #1B1B1B 74%)"}}>
-        <h1 className="text-xl font-semibold text-gray-100">Website Builder</h1>
-        <p className="text-sm text-gray-400 mt-1">Prompt: {prompt}</p>
+        <h1 className="text-xl font-semibold text-gray-100">AB-WEB-APP</h1>
+        <p className="text-sm text-gray-400 mt-1 w-[80%] text-center ">Prompt: {prompt}</p>
       </header>
       
       <div className="flex-1 overflow-hidden">
@@ -238,7 +228,7 @@ export function Builder() {
                   {!(loading || !templateSet) || <div className='flex'>
                     <textarea value={userPrompt} onChange={(e) => {
                     setPrompt(e.target.value)
-                  }} className='p-2 w-[300px]'></textarea>
+                  }} className='p-2 w-[300px] bg-white'></textarea>
                   <button onClick={async () => {
                     const newMessage = {
                       role: "user" as "user",
@@ -274,6 +264,7 @@ export function Builder() {
       backgroundImage: "linear-gradient(315deg, #003366 0%, #242124 74%)"
     }}>
           <div className="w-[200px] mr-11">
+            {!files && <div>Loading</div>}
               <FileExplorer 
                 files={files} 
                 onFileSelect={setSelectedFile}
