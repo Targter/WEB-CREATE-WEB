@@ -2,17 +2,9 @@
   "name": "be",
   "version": "1.0.0",
   "main": "index.js",
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-],
   "scripts": {
-   "dev": "tsc -b && node dist/index.js",
-    "start": "tsc -b && nodemon dist/index.js",
-    "build": "rimraf dist && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "vercel-build": "tsc"
+    "dev": "tsc -b && node dist/index.js",
+    "start": "tsc -b && nodemon dist/index.js"
   },
   "keywords": [],
   "author": "",
