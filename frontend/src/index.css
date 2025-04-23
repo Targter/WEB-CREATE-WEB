@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar track background */
+.hide-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Adjust scrollbar width */
+}
+
+/* Scrollbar track */
+.hide-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Scrollbar thumb */
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #111827; /* Tailwind gray-900 */
+  border-radius: 8px;
+}
+
+/* Firefox scrollbar styling */
+.hide-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #111827 transparent; /* thumb color | track color */
+}
