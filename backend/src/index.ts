@@ -21,7 +21,13 @@ app.use(cors({
     credentials: true // allow cookies
   }));
 app.use(express.json())
-
+app.get("/", async (req, res) => {
+    try {
+      res.json({ message: "response working" });
+    } catch (error) {
+      res.status(500).json({ error: "Something went wrong" });
+    }
+  });
 app.post("/template", async (req, res) => {
     const prompt = req.body.prompt;
         
