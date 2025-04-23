@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "tsc -b && node dist/index.js",
     "start": "tsc -b && nodemon dist/index.js"
+    "build":"tsc -b && node dist/index.js"
   },
   "keywords": [],
   "author": "",
