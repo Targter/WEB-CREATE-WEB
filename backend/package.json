@@ -8,11 +8,11 @@
     "add-build"
 ],
   "scripts": {
-    "dev": "tsc -b && node dist/index.js",
+   "dev": "tsc -b && node dist/index.js",
     "start": "tsc -b && nodemon dist/index.js",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist"
+    "vercel-build": "tsc"
   },
   "keywords": [],
   "author": "",
